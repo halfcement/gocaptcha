@@ -1,6 +1,6 @@
 name: gocaptcha
 description: "flutter实现gocaptcha图形验证码:https://github.com/wenlng/go-captcha"
-version: 0.0.1
+version: 0.0.1+1
 homepage: https://github.com/halfcement/gocaptcha
 
 environment:

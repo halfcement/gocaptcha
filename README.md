@@ -18,6 +18,7 @@ showDialog(
     ),
 );
 ```  
+```flutter pub publish --server=https://pub.dartlang.org ```  
 支持的类型:  
 - 滑动验证  ✅  
 - 点击验证  ×  
