@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gocaptcha/slide_captcha.dart';
+import 'package:gocaptcha/slide_captcha_end_model.dart';
 import 'package:gocaptcha/slide_captcha_model.dart';
 
 // 滑动验证页面 Slide the verification page
@@ -32,6 +33,9 @@ class _SlidePageState extends State<SlidePage> {
     };
     return SlideCaptchaModel.fromJson(data);
   }
+  Future<bool> checkCaptcha(SlideCaptchaEndModel model)async{
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +45,13 @@ class _SlidePageState extends State<SlidePage> {
           children: [
             ElevatedButton(
               onPressed: () {
-
                 showDialog(
                   context: context,
                   builder: (_) => SlideCaptcha(
                     getCaptcha: getCaptcha,
-                    onEnd: (position) {
-                      ///TODO 获取到位置后验证 #Verify after obtaining the location
+                    checkCaptcha: checkCaptcha,
+                    onSuccess: () {
+                     Navigator.pop(context);
                     },
                   ),
                 );

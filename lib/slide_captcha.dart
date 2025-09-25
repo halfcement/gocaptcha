@@ -2,17 +2,20 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'slide_captcha_end_model.dart';
 import 'slide_captcha_model.dart';
 
 //滑动图形验证码
 class SlideCaptcha extends StatefulWidget {
-  const SlideCaptcha({super.key, required this.getCaptcha, this.title, required this.onEnd});
+  const SlideCaptcha({super.key, required this.getCaptcha, this.title, required this.onSuccess, required this.checkCaptcha});
 
   final String? title;
 
   //返回一个SlideCaptchaModel的异步方法
   final Future<SlideCaptchaModel> Function() getCaptcha;
-  final Function(int) onEnd;
+  //检验方法
+  final Future<bool> Function(SlideCaptchaEndModel) checkCaptcha;
+  final VoidCallback onSuccess;
 
   @override
   State<SlideCaptcha> createState() => _SlideCaptchaState();
@@ -109,7 +112,17 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
                             setState(() {});
                           },
                           onHorizontalDragEnd: (details) async {
-                            widget.onEnd(left.toInt());
+                            var data = SlideCaptchaEndModel(
+                              captchaId: model!.captchaId,
+                              captchaKey: model!.captchaKey,
+                              captchaValue: "${left.toInt()},${model!.displayY}"
+                            );
+                            final res = await widget.checkCaptcha(data);
+                            if(res==true){
+                              widget.onSuccess();
+                            }else{
+                              getData();
+                            }
                           },
                           child: Container(
                             height: 30,
