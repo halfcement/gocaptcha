@@ -1,21 +1,26 @@
 import 'dart:convert';
 import 'dart:typed_data';
-//用于接受图形验证码的模型
-SlideCaptchaModel slideCaptchaModelFromJson(String str) => SlideCaptchaModel.fromJson(json.decode(str));
-String slideCaptchaModelToJson(SlideCaptchaModel data) => json.encode(data.toJson());
+
+///用于接受图形验证码的模型
+SlideCaptchaModel slideCaptchaModelFromJson(String str) =>
+    SlideCaptchaModel.fromJson(json.decode(str));
+String slideCaptchaModelToJson(SlideCaptchaModel data) =>
+    json.encode(data.toJson());
+
 class SlideCaptchaModel {
   SlideCaptchaModel({
-      String? captchaId, 
-      String? captchaKey, 
-      int? displayX, 
-      int? displayY,
-      int? masterHeight, 
-      Uint8List? masterImageBase64,
-      int? masterWidth, 
-      int? thumbHeight,
+    String? captchaId,
+    String? captchaKey,
+    int? displayX,
+    int? displayY,
+    int? masterHeight,
+    Uint8List? masterImageBase64,
+    int? masterWidth,
+    int? thumbHeight,
     Uint8List? thumbImageBase64,
-      int? thumbSize, 
-      int? thumbWidth,}){
+    int? thumbSize,
+    int? thumbWidth,
+  }) {
     _captchaId = captchaId;
     _captchaKey = captchaKey;
     _displayX = displayX;
@@ -27,7 +32,7 @@ class SlideCaptchaModel {
     _thumbImageBase64 = thumbImageBase64;
     _thumbSize = thumbSize;
     _thumbWidth = thumbWidth;
-}
+  }
 
   SlideCaptchaModel.fromJson(dynamic json) {
     _captchaId = json['captchaId'];
@@ -35,13 +40,17 @@ class SlideCaptchaModel {
     _displayX = json['displayX'];
     _displayY = json['displayY'];
     _masterHeight = json['masterHeight'];
-    if(json['masterImageBase64']!=null){
-      _masterImageBase64 = base64Decode("${json['masterImageBase64']}".split(",")[1]) as Uint8List?;
+    if (json['masterImageBase64'] != null) {
+      _masterImageBase64 =
+          base64Decode("${json['masterImageBase64']}".split(",")[1])
+              as Uint8List?;
     }
     _masterWidth = json['masterWidth'];
     _thumbHeight = json['thumbHeight'];
-    if(json['thumbImageBase64']!=null) {
-      _thumbImageBase64 = base64Decode("${json['thumbImageBase64']}".split(",")[1]) as Uint8List?;
+    if (json['thumbImageBase64'] != null) {
+      _thumbImageBase64 =
+          base64Decode("${json['thumbImageBase64']}".split(",")[1])
+              as Uint8List?;
     }
     _thumbSize = json['thumbSize'];
     _thumbWidth = json['thumbWidth'];
@@ -85,5 +94,4 @@ class SlideCaptchaModel {
     map['thumbWidth'] = _thumbWidth;
     return map;
   }
-
 }

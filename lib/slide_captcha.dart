@@ -1,19 +1,25 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'slide_captcha_end_model.dart';
 import 'slide_captcha_model.dart';
 
-//滑动图形验证码
+///滑动图形验证码
 class SlideCaptcha extends StatefulWidget {
-  const SlideCaptcha({super.key, required this.getCaptcha, this.title, required this.onSuccess, required this.checkCaptcha});
+  const SlideCaptcha({
+    super.key,
+    required this.getCaptcha,
+    this.title,
+    required this.onSuccess,
+    required this.checkCaptcha,
+  });
 
   final String? title;
 
-  //返回一个SlideCaptchaModel的异步方法
+  ///返回一个SlideCaptchaModel的异步方法
   final Future<SlideCaptchaModel> Function() getCaptcha;
-  //检验方法
+
+  ///检验方法
   final Future<bool> Function(SlideCaptchaEndModel) checkCaptcha;
   final VoidCallback onSuccess;
 
@@ -31,7 +37,8 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
     getData();
   }
 
-  getData() async {
+  ///获取验证码
+  void getData() async {
     model = await widget.getCaptcha();
     setState(() {
       left = model?.displayX?.toDouble() ?? 0.0;
@@ -41,13 +48,17 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
   @override
   Widget build(BuildContext context) {
     if (model == null) {
+      ///默认加载组件
       return CupertinoActivityIndicator();
     } else {
       return Material(
         type: MaterialType.transparency,
         child: Center(
           child: Container(
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
             margin: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -56,18 +67,36 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
                   height: 4,
                   decoration: BoxDecoration(
                     color: Colors.blue,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   child: Row(
                     spacing: 8,
                     children: [
-                      Text(widget.title ?? "请拖动滑块完成拼图", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                      Text(
+                        widget.title ?? "请拖动滑块完成拼图",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const Spacer(),
-                      GestureDetector(onTap: () => Navigator.pop(context), child: Icon(CupertinoIcons.clear_circled)),
-                      GestureDetector(onTap: () => getData(), child: Icon(CupertinoIcons.refresh_circled)),
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Icon(CupertinoIcons.clear_circled),
+                      ),
+                      GestureDetector(
+                        onTap: () => getData(),
+                        child: Icon(CupertinoIcons.refresh_circled),
+                      ),
                     ],
                   ),
                 ),
@@ -75,11 +104,17 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
                   width: model!.masterWidth?.toDouble() ?? 0,
                   child: Stack(
                     children: [
-                      Image.memory(model!.masterImageBase64!,gaplessPlayback: true,),
+                      Image.memory(
+                        model!.masterImageBase64!,
+                        gaplessPlayback: true,
+                      ),
                       Positioned(
                         top: model!.displayY?.toDouble() ?? 0,
                         left: left,
-                        child: Image.memory(model!.thumbImageBase64!,gaplessPlayback: true,),
+                        child: Image.memory(
+                          model!.thumbImageBase64!,
+                          gaplessPlayback: true,
+                        ),
                       ),
                     ],
                   ),
@@ -102,7 +137,9 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
                         child: GestureDetector(
                           onHorizontalDragUpdate: (details) {
                             left += details.delta.dx;
-                            double maxX = (model!.masterWidth?.toDouble() ?? 0) - (model!.thumbWidth?.toDouble() ?? 0);
+                            double maxX =
+                                (model!.masterWidth?.toDouble() ?? 0) -
+                                (model!.thumbWidth?.toDouble() ?? 0);
                             if (left < 0) {
                               left = 0;
                             }
@@ -115,20 +152,28 @@ class _SlideCaptchaState extends State<SlideCaptcha> {
                             var data = SlideCaptchaEndModel(
                               captchaId: model!.captchaId,
                               captchaKey: model!.captchaKey,
-                              captchaValue: "${left.toInt()},${model!.displayY}"
+                              captchaValue:
+                                  "${left.toInt()},${model!.displayY}",
                             );
                             final res = await widget.checkCaptcha(data);
-                            if(res==true){
+                            if (res == true) {
                               widget.onSuccess();
-                            }else{
+                            } else {
                               getData();
                             }
                           },
                           child: Container(
                             height: 30,
                             width: model!.thumbWidth?.toDouble() ?? 0,
-                            decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(50)),
-                            child: Icon(CupertinoIcons.arrow_right, color: Colors.white, size: 18),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Icon(
+                              CupertinoIcons.arrow_right,
+                              color: Colors.white,
+                              size: 18,
+                            ),
                           ),
                         ),
                       ),

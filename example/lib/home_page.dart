@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'slide_page.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -14,9 +13,15 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>SlidePage()));
-            }, child: Text("Slide Page"))
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => SlidePage()),
+                );
+              },
+              child: Text("Slide Page"),
+            ),
           ],
         ),
       ),

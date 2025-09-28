@@ -1,5 +1,5 @@
 name: gocaptcha
-description: "gocaptcha:https://github.com/wenlng/go-captcha"
+description: A flutter widget for gocaptcha where github repo is "gocaptcha:https://github.com/wenlng/go-captcha"
 version: 0.0.1+4
 homepage: https://github.com/halfcement/gocaptcha
 

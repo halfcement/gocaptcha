@@ -1,15 +1,21 @@
 import 'dart:convert';
-SlideCaptchaEndModel slideCaptchaEndModelFromJson(String str) => SlideCaptchaEndModel.fromJson(json.decode(str));
-String slideCaptchaEndModelToJson(SlideCaptchaEndModel data) => json.encode(data.toJson());
+
+/// 用于返回调用处的模型,主要是captchaValue
+SlideCaptchaEndModel slideCaptchaEndModelFromJson(String str) =>
+    SlideCaptchaEndModel.fromJson(json.decode(str));
+String slideCaptchaEndModelToJson(SlideCaptchaEndModel data) =>
+    json.encode(data.toJson());
+
 class SlideCaptchaEndModel {
   SlideCaptchaEndModel({
-      String? captchaId, 
-      String? captchaKey, 
-      String? captchaValue,}){
+    String? captchaId,
+    String? captchaKey,
+    String? captchaValue,
+  }) {
     _captchaId = captchaId;
     _captchaKey = captchaKey;
     _captchaValue = captchaValue;
-}
+  }
 
   SlideCaptchaEndModel.fromJson(dynamic json) {
     _captchaId = json['captchaId'];
@@ -31,5 +37,4 @@ class SlideCaptchaEndModel {
     map['captchaValue'] = _captchaValue;
     return map;
   }
-
 }
