@@ -27,7 +27,7 @@ jobs:
 
       - name: 推送到pub.dev仓库
         env:
-          PUB_CREDENTIALS_JSON: ${{ secrets.PUB_DEV_TOKEN }}
+          PUB_CREDENTIALS_JSON: ${{ secrets.PUB_CREDENTIALS_JSON }}
         run: |
           mkdir -p ~/.pub-cache
           echo "$PUB_CREDENTIALS_JSON" > ~/.pub-cache/credentials.json
