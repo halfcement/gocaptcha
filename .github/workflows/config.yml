@@ -26,8 +26,12 @@ jobs:
         run: flutter pub get
 
       - name: 推送到pub.dev仓库
-        env:
-          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
         run: |
-          echo $PUB_DEV_TOKEN > ~/.pub-cache/credentials.json
+          mkdir -p ~/.pub-cache
+          echo '{
+            "accessToken":"'"${{ secrets.PUB_DEV_TOKEN }}"'",
+            "refreshToken":"fake-refresh-token",
+            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+            "scopes":["https://www.googleapis.com/auth/userinfo.email"]
+          }' > ~/.pub-cache/credentials.json
           flutter pub publish --server=https://pub.dartlang.org --force
