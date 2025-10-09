@@ -17,7 +17,7 @@ class SlideCaptcha extends StatefulWidget {
   final String? title;
 
   ///返回一个SlideCaptchaModel的异步方法
-  final Future<SlideCaptchaModel> Function() getCaptcha;
+  final Future<SlideCaptchaModel?> Function() getCaptcha;
 
   ///检验方法
   final Future<bool> Function(SlideCaptchaEndModel) checkCaptcha;
